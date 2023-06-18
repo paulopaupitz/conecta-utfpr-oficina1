@@ -1,5 +1,30 @@
 # conecta-utfpr-oficina1
 
-Um acontecimento comum que pode ocorrer a todos os indivíduos em um ambiente universitário é a perda de seus objetos, seja por descuido, pressa ou acidente. O fato é que isso se trata de uma situação inesperada que não agrada qualquer pessoa, e pode ser frustrante acarretando  a perda um objeto com alto valor de mercado ou que tenha significado sentimental.
+## Configuração do Banco de Dados
 
-Pensando no pressuposto, foi desenvolvido uma solução de software que fornece um ambiente onde as pessoas podem cadastrar -se e autenticar - se no sistema, de modo que possam realizar o registro de determinado objeto encontrado no campus, visualizar os itens já cadastrados ou até mesmo buscar por determinado item a partir de um campo que permite a filtragem, de modo que seja possível encontrar um objeto pelo seu tipo e/ou categoria.
+Para executar o software corretamente, é imprescindível ter o MySQL instalado em sua máquina, pois ele foi desenvolvido com base nesse banco de dados. Siga as instruções abaixo criar o banco de dados e as tabelas necessárias:
+
+1. Crie um novo banco de dados, com o nome `oficina_apoo`. Após, execute o seguinte script SQL no novo banco de dados para a criação das tabelas:
+   
+```
+CREATE TABLE usuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    campus VARCHAR(255) NOT NULL,
+    tipo_usuario VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE item (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    local VARCHAR(255) NOT NULL,
+    descricao VARCHAR(255) NOT NULL,
+    situacao VARCHAR(255) NOT NULL,
+    data_encontro VARCHAR(255) NOT NULL,
+    criado_por INT,
+    atualizado_por INT,
+    FOREIGN KEY (criado_por) REFERENCES usuario (id),
+    FOREIGN KEY (atualizado_por) REFERENCES usuario (id)
+);
